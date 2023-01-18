@@ -22,3 +22,4 @@ return(
 {#each fruits as fruit}
 	<Title title = {fruitLength(fruit)}/>
 {/each}
+
