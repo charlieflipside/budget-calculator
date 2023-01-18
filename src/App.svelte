@@ -1,13 +1,9 @@
 <script>
 import Navbar from './Navbar.svelte';
-import Title from './Title.svelte';
-let fruits = ['apple', 'orange','banana'];
+import expensesData from '../expenses';
 
-function fruitLength(fruit){
-return(
-	fruit + '-' + fruit.length
-)
-} 
+let expenses = [...expensesData];
+console.log(expenses);
 
 </script>
 
@@ -16,10 +12,3 @@ return(
 <!-- HTML -->
 
 <Navbar />
-<Title />
-<Title title = "Add Item"/>
-
-{#each fruits as fruit}
-	<Title title = {fruitLength(fruit)}/>
-{/each}
-
