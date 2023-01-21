@@ -8,10 +8,8 @@
     <SectionTitle title = "Expense List"/>
 </section>
 
-{#each expenses as expense, index}
-<div class = "single-expense">    
-    <Expense index = {index + 1} expense = {expense}/>
-</div>
+{#each expenses as expense}  
+    <Expense expense = {expense}/>
     {:else}
     <h2>No expenses right now</h2>
 {/each}

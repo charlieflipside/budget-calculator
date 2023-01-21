@@ -604,65 +604,99 @@ var app = (function () {
     const file$2 = "src\\Expense.svelte";
 
     function create_fragment$2(ctx) {
-    	let div;
-    	let h1;
+    	let article;
+    	let div0;
+    	let h2;
+    	let t0_value = /*expense*/ ctx[0].name + "";
     	let t0;
     	let t1;
-    	let t2_value = /*expense*/ ctx[0].name + "";
+    	let button0;
+    	let i0;
     	let t2;
+    	let h4;
     	let t3;
-    	let h2;
-    	let t4_value = /*expense*/ ctx[0].id + "";
+    	let t4_value = /*expense*/ ctx[0].amount + "";
     	let t4;
     	let t5;
-    	let p;
-    	let t6_value = /*expense*/ ctx[0].amount + "";
+    	let div1;
+    	let button1;
+    	let i1;
     	let t6;
+    	let button2;
+    	let i2;
 
     	const block = {
     		c: function create() {
-    			div = element("div");
-    			h1 = element("h1");
-    			t0 = text(/*index*/ ctx[1]);
-    			t1 = text(" - ");
-    			t2 = text(t2_value);
-    			t3 = space();
+    			article = element("article");
+    			div0 = element("div");
     			h2 = element("h2");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			button0 = element("button");
+    			i0 = element("i");
+    			t2 = space();
+    			h4 = element("h4");
+    			t3 = text("amount: $");
     			t4 = text(t4_value);
     			t5 = space();
-    			p = element("p");
-    			t6 = text(t6_value);
-    			add_location(h1, file$2, 6, 4, 88);
-    			add_location(h2, file$2, 9, 4, 139);
-    			add_location(p, file$2, 10, 4, 166);
-    			add_location(div, file$2, 5, 0, 77);
+    			div1 = element("div");
+    			button1 = element("button");
+    			i1 = element("i");
+    			t6 = space();
+    			button2 = element("button");
+    			i2 = element("i");
+    			attr_dev(i0, "class", "fas fa-caret-down");
+    			add_location(i0, file$2, 10, 8, 190);
+    			attr_dev(button0, "class", "amount-btn");
+    			add_location(button0, file$2, 9, 4, 151);
+    			add_location(h2, file$2, 7, 0, 121);
+    			add_location(h4, file$2, 13, 0, 248);
+    			attr_dev(div0, "class", "expense-info");
+    			add_location(div0, file$2, 6, 0, 91);
+    			attr_dev(i1, "class", "fas fa-pen");
+    			add_location(i1, file$2, 17, 4, 370);
+    			attr_dev(button1, "class", "expense-btn edit-btn");
+    			add_location(button1, file$2, 16, 0, 325);
+    			attr_dev(i2, "class", "fas fa-trash");
+    			add_location(i2, file$2, 20, 4, 456);
+    			attr_dev(button2, "class", "expense-btn delete-btn");
+    			add_location(button2, file$2, 19, 0, 409);
+    			attr_dev(div1, "class", "expense-buttons");
+    			add_location(div1, file$2, 15, 0, 292);
+    			attr_dev(article, "class", "single-expense");
+    			add_location(article, file$2, 5, 0, 55);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
-    			append_dev(div, h1);
-    			append_dev(h1, t0);
-    			append_dev(h1, t1);
-    			append_dev(h1, t2);
-    			append_dev(div, t3);
-    			append_dev(div, h2);
-    			append_dev(h2, t4);
-    			append_dev(div, t5);
-    			append_dev(div, p);
-    			append_dev(p, t6);
+    			insert_dev(target, article, anchor);
+    			append_dev(article, div0);
+    			append_dev(div0, h2);
+    			append_dev(h2, t0);
+    			append_dev(h2, t1);
+    			append_dev(h2, button0);
+    			append_dev(button0, i0);
+    			append_dev(div0, t2);
+    			append_dev(div0, h4);
+    			append_dev(h4, t3);
+    			append_dev(h4, t4);
+    			append_dev(article, t5);
+    			append_dev(article, div1);
+    			append_dev(div1, button1);
+    			append_dev(button1, i1);
+    			append_dev(div1, t6);
+    			append_dev(div1, button2);
+    			append_dev(button2, i2);
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*index*/ 2) set_data_dev(t0, /*index*/ ctx[1]);
-    			if (dirty & /*expense*/ 1 && t2_value !== (t2_value = /*expense*/ ctx[0].name + "")) set_data_dev(t2, t2_value);
-    			if (dirty & /*expense*/ 1 && t4_value !== (t4_value = /*expense*/ ctx[0].id + "")) set_data_dev(t4, t4_value);
-    			if (dirty & /*expense*/ 1 && t6_value !== (t6_value = /*expense*/ ctx[0].amount + "")) set_data_dev(t6, t6_value);
+    			if (dirty & /*expense*/ 1 && t0_value !== (t0_value = /*expense*/ ctx[0].name + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*expense*/ 1 && t4_value !== (t4_value = /*expense*/ ctx[0].amount + "")) set_data_dev(t4, t4_value);
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(article);
     		}
     	};
 
@@ -681,15 +715,7 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Expense', slots, []);
     	let { expense = [] } = $$props;
-    	let { index } = $$props;
-
-    	$$self.$$.on_mount.push(function () {
-    		if (index === undefined && !('index' in $$props || $$self.$$.bound[$$self.$$.props['index']])) {
-    			console.warn("<Expense> was created without expected prop 'index'");
-    		}
-    	});
-
-    	const writable_props = ['expense', 'index'];
+    	const writable_props = ['expense'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Expense> was created with unknown prop '${key}'`);
@@ -697,27 +723,25 @@ var app = (function () {
 
     	$$self.$$set = $$props => {
     		if ('expense' in $$props) $$invalidate(0, expense = $$props.expense);
-    		if ('index' in $$props) $$invalidate(1, index = $$props.index);
     	};
 
-    	$$self.$capture_state = () => ({ expense, index });
+    	$$self.$capture_state = () => ({ expense });
 
     	$$self.$inject_state = $$props => {
     		if ('expense' in $$props) $$invalidate(0, expense = $$props.expense);
-    		if ('index' in $$props) $$invalidate(1, index = $$props.index);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [expense, index];
+    	return [expense];
     }
 
     class Expense extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { expense: 0, index: 1 });
+    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { expense: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -734,14 +758,6 @@ var app = (function () {
     	set expense(value) {
     		throw new Error("<Expense>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
-
-    	get index() {
-    		throw new Error("<Expense>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set index(value) {
-    		throw new Error("<Expense>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
     }
 
     /* src\ExpenseList.svelte generated by Svelte v3.55.1 */
@@ -750,11 +766,10 @@ var app = (function () {
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
     	child_ctx[1] = list[i];
-    	child_ctx[3] = i;
     	return child_ctx;
     }
 
-    // (15:4) {:else}
+    // (13:4) {:else}
     function create_else_block(ctx) {
     	let h2;
 
@@ -762,7 +777,7 @@ var app = (function () {
     		c: function create() {
     			h2 = element("h2");
     			h2.textContent = "No expenses right now";
-    			add_location(h2, file$1, 15, 4, 373);
+    			add_location(h2, file$1, 13, 4, 304);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);
@@ -777,40 +792,29 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(15:4) {:else}",
+    		source: "(13:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (11:0) {#each expenses as expense, index}
+    // (11:0) {#each expenses as expense}
     function create_each_block(ctx) {
-    	let div;
     	let expense;
-    	let t;
     	let current;
 
     	expense = new Expense({
-    			props: {
-    				index: /*index*/ ctx[3] + 1,
-    				expense: /*expense*/ ctx[1]
-    			},
+    			props: { expense: /*expense*/ ctx[1] },
     			$$inline: true
     		});
 
     	const block = {
     		c: function create() {
-    			div = element("div");
     			create_component(expense.$$.fragment);
-    			t = space();
-    			attr_dev(div, "class", "single-expense");
-    			add_location(div, file$1, 11, 0, 256);
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
-    			mount_component(expense, div, null);
-    			append_dev(div, t);
+    			mount_component(expense, target, anchor);
     			current = true;
     		},
     		p: function update(ctx, dirty) {
@@ -828,8 +832,7 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
-    			destroy_component(expense);
+    			destroy_component(expense, detaching);
     		}
     	};
 
@@ -837,7 +840,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(11:0) {#each expenses as expense, index}",
+    		source: "(11:0) {#each expenses as expense}",
     		ctx
     	});
 
