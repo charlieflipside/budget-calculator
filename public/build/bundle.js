@@ -632,7 +632,7 @@ var app = (function () {
     			h4 = element("h4");
     			t0 = text("amount: $");
     			t1 = text(t1_value);
-    			add_location(h4, file$2, 18, 4, 404);
+    			add_location(h4, file$2, 18, 4, 410);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h4, anchor);
@@ -698,24 +698,24 @@ var app = (function () {
     			button2 = element("button");
     			i2 = element("i");
     			attr_dev(i0, "class", "fas fa-caret-down");
-    			add_location(i0, file$2, 14, 8, 322);
+    			add_location(i0, file$2, 14, 8, 328);
     			attr_dev(button0, "class", "amount-btn");
-    			add_location(button0, file$2, 13, 4, 259);
-    			add_location(h2, file$2, 11, 0, 229);
+    			add_location(button0, file$2, 13, 4, 260);
+    			add_location(h2, file$2, 11, 0, 230);
     			attr_dev(div0, "class", "expense-info");
-    			add_location(div0, file$2, 10, 0, 199);
+    			add_location(div0, file$2, 10, 0, 200);
     			attr_dev(i1, "class", "fas fa-pen");
-    			add_location(i1, file$2, 23, 4, 533);
+    			add_location(i1, file$2, 23, 4, 539);
     			attr_dev(button1, "class", "expense-btn edit-btn");
-    			add_location(button1, file$2, 22, 0, 488);
+    			add_location(button1, file$2, 22, 0, 494);
     			attr_dev(i2, "class", "fas fa-trash");
-    			add_location(i2, file$2, 26, 4, 619);
+    			add_location(i2, file$2, 26, 4, 625);
     			attr_dev(button2, "class", "expense-btn delete-btn");
-    			add_location(button2, file$2, 25, 0, 572);
+    			add_location(button2, file$2, 25, 0, 578);
     			attr_dev(div1, "class", "expense-buttons");
-    			add_location(div1, file$2, 21, 0, 455);
+    			add_location(div1, file$2, 21, 0, 461);
     			attr_dev(article, "class", "single-expense");
-    			add_location(article, file$2, 9, 0, 163);
+    			add_location(article, file$2, 9, 0, 164);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -739,7 +739,7 @@ var app = (function () {
     			append_dev(button2, i2);
 
     			if (!mounted) {
-    				dispose = listen_dev(button0, "click", /*toggleAmount*/ ctx[2], false, false, false);
+    				dispose = listen_dev(button0, "click", /*toggleAmount*/ ctx[2], { once: true }, false, false);
     				mounted = true;
     			}
     		},
@@ -784,7 +784,7 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Expense', slots, []);
     	let { expense = [] } = $$props;
-    	let amountToggle = true;
+    	let amountToggle = false;
 
     	function toggleAmount() {
     		$$invalidate(1, amountToggle = !amountToggle);
