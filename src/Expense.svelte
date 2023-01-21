@@ -1,5 +1,6 @@
 <script>
     export let expense = [];
+    export let removeExpense;
     let amountToggle = false;
 
     function toggleAmount() { 
@@ -11,7 +12,7 @@
 <div class = "expense-info">
 <h2>
     {expense.name}
-    <button class = "amount-btn" on:click|once={toggleAmount}>
+    <button class = "amount-btn" on:click={toggleAmount}>
         <i class="fas fa-caret-down"></i>
     </button> 
 </h2>
@@ -23,7 +24,7 @@
 <button class = "expense-btn edit-btn">
     <i class="fas fa-pen"></i>
 </button>
-<button class = "expense-btn delete-btn">
+<button class = "expense-btn delete-btn" on:click={removeExpense(expense.id)}>
     <i class="fas fa-trash"></i>
 </button>
 </div>

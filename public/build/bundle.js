@@ -620,7 +620,7 @@ var app = (function () {
 
     const file$2 = "src\\Expense.svelte";
 
-    // (18:0) {#if amountToggle}
+    // (19:0) {#if amountToggle}
     function create_if_block(ctx) {
     	let h4;
     	let t0;
@@ -632,7 +632,7 @@ var app = (function () {
     			h4 = element("h4");
     			t0 = text("amount: $");
     			t1 = text(t1_value);
-    			add_location(h4, file$2, 18, 4, 410);
+    			add_location(h4, file$2, 19, 4, 436);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h4, anchor);
@@ -651,7 +651,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(18:0) {#if amountToggle}",
+    		source: "(19:0) {#if amountToggle}",
     		ctx
     	});
 
@@ -677,7 +677,7 @@ var app = (function () {
     	let i2;
     	let mounted;
     	let dispose;
-    	let if_block = /*amountToggle*/ ctx[1] && create_if_block(ctx);
+    	let if_block = /*amountToggle*/ ctx[2] && create_if_block(ctx);
 
     	const block = {
     		c: function create() {
@@ -698,24 +698,24 @@ var app = (function () {
     			button2 = element("button");
     			i2 = element("i");
     			attr_dev(i0, "class", "fas fa-caret-down");
-    			add_location(i0, file$2, 14, 8, 328);
+    			add_location(i0, file$2, 15, 8, 354);
     			attr_dev(button0, "class", "amount-btn");
-    			add_location(button0, file$2, 13, 4, 260);
-    			add_location(h2, file$2, 11, 0, 230);
+    			add_location(button0, file$2, 14, 4, 291);
+    			add_location(h2, file$2, 12, 0, 261);
     			attr_dev(div0, "class", "expense-info");
-    			add_location(div0, file$2, 10, 0, 200);
+    			add_location(div0, file$2, 11, 0, 231);
     			attr_dev(i1, "class", "fas fa-pen");
-    			add_location(i1, file$2, 23, 4, 539);
+    			add_location(i1, file$2, 24, 4, 565);
     			attr_dev(button1, "class", "expense-btn edit-btn");
-    			add_location(button1, file$2, 22, 0, 494);
+    			add_location(button1, file$2, 23, 0, 520);
     			attr_dev(i2, "class", "fas fa-trash");
-    			add_location(i2, file$2, 26, 4, 625);
+    			add_location(i2, file$2, 27, 4, 688);
     			attr_dev(button2, "class", "expense-btn delete-btn");
-    			add_location(button2, file$2, 25, 0, 578);
+    			add_location(button2, file$2, 26, 0, 604);
     			attr_dev(div1, "class", "expense-buttons");
-    			add_location(div1, file$2, 21, 0, 461);
+    			add_location(div1, file$2, 22, 0, 487);
     			attr_dev(article, "class", "single-expense");
-    			add_location(article, file$2, 9, 0, 164);
+    			add_location(article, file$2, 10, 0, 195);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -739,14 +739,28 @@ var app = (function () {
     			append_dev(button2, i2);
 
     			if (!mounted) {
-    				dispose = listen_dev(button0, "click", /*toggleAmount*/ ctx[2], { once: true }, false, false);
+    				dispose = [
+    					listen_dev(button0, "click", /*toggleAmount*/ ctx[3], false, false, false),
+    					listen_dev(
+    						button2,
+    						"click",
+    						function () {
+    							if (is_function(/*removeExpense*/ ctx[1](/*expense*/ ctx[0].id))) /*removeExpense*/ ctx[1](/*expense*/ ctx[0].id).apply(this, arguments);
+    						},
+    						false,
+    						false,
+    						false
+    					)
+    				];
+
     				mounted = true;
     			}
     		},
-    		p: function update(ctx, [dirty]) {
+    		p: function update(new_ctx, [dirty]) {
+    			ctx = new_ctx;
     			if (dirty & /*expense*/ 1 && t0_value !== (t0_value = /*expense*/ ctx[0].name + "")) set_data_dev(t0, t0_value);
 
-    			if (/*amountToggle*/ ctx[1]) {
+    			if (/*amountToggle*/ ctx[2]) {
     				if (if_block) {
     					if_block.p(ctx, dirty);
     				} else {
@@ -765,7 +779,7 @@ var app = (function () {
     			if (detaching) detach_dev(article);
     			if (if_block) if_block.d();
     			mounted = false;
-    			dispose();
+    			run_all(dispose);
     		}
     	};
 
@@ -784,13 +798,20 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Expense', slots, []);
     	let { expense = [] } = $$props;
+    	let { removeExpense } = $$props;
     	let amountToggle = false;
 
     	function toggleAmount() {
-    		$$invalidate(1, amountToggle = !amountToggle);
+    		$$invalidate(2, amountToggle = !amountToggle);
     	}
 
-    	const writable_props = ['expense'];
+    	$$self.$$.on_mount.push(function () {
+    		if (removeExpense === undefined && !('removeExpense' in $$props || $$self.$$.bound[$$self.$$.props['removeExpense']])) {
+    			console.warn("<Expense> was created without expected prop 'removeExpense'");
+    		}
+    	});
+
+    	const writable_props = ['expense', 'removeExpense'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Expense> was created with unknown prop '${key}'`);
@@ -798,26 +819,33 @@ var app = (function () {
 
     	$$self.$$set = $$props => {
     		if ('expense' in $$props) $$invalidate(0, expense = $$props.expense);
+    		if ('removeExpense' in $$props) $$invalidate(1, removeExpense = $$props.removeExpense);
     	};
 
-    	$$self.$capture_state = () => ({ expense, amountToggle, toggleAmount });
+    	$$self.$capture_state = () => ({
+    		expense,
+    		removeExpense,
+    		amountToggle,
+    		toggleAmount
+    	});
 
     	$$self.$inject_state = $$props => {
     		if ('expense' in $$props) $$invalidate(0, expense = $$props.expense);
-    		if ('amountToggle' in $$props) $$invalidate(1, amountToggle = $$props.amountToggle);
+    		if ('removeExpense' in $$props) $$invalidate(1, removeExpense = $$props.removeExpense);
+    		if ('amountToggle' in $$props) $$invalidate(2, amountToggle = $$props.amountToggle);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [expense, amountToggle, toggleAmount];
+    	return [expense, removeExpense, amountToggle, toggleAmount];
     }
 
     class Expense extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { expense: 0 });
+    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { expense: 0, removeExpense: 1 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -834,6 +862,14 @@ var app = (function () {
     	set expense(value) {
     		throw new Error("<Expense>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
+
+    	get removeExpense() {
+    		throw new Error("<Expense>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set removeExpense(value) {
+    		throw new Error("<Expense>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
     }
 
     /* src\ExpenseList.svelte generated by Svelte v3.55.1 */
@@ -841,11 +877,11 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[1] = list[i];
+    	child_ctx[2] = list[i];
     	return child_ctx;
     }
 
-    // (13:4) {:else}
+    // (14:4) {:else}
     function create_else_block(ctx) {
     	let h2;
 
@@ -853,7 +889,7 @@ var app = (function () {
     		c: function create() {
     			h2 = element("h2");
     			h2.textContent = "No expenses right now";
-    			add_location(h2, file$1, 13, 4, 304);
+    			add_location(h2, file$1, 14, 4, 367);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);
@@ -868,20 +904,23 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(13:4) {:else}",
+    		source: "(14:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (11:0) {#each expenses as expense}
+    // (12:0) {#each expenses as expense}
     function create_each_block(ctx) {
     	let expense;
     	let current;
 
     	expense = new Expense({
-    			props: { expense: /*expense*/ ctx[1] },
+    			props: {
+    				expense: /*expense*/ ctx[2],
+    				removeExpense: /*removeExpense*/ ctx[1]
+    			},
     			$$inline: true
     		});
 
@@ -895,7 +934,8 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			const expense_changes = {};
-    			if (dirty & /*expenses*/ 1) expense_changes.expense = /*expense*/ ctx[1];
+    			if (dirty & /*expenses*/ 1) expense_changes.expense = /*expense*/ ctx[2];
+    			if (dirty & /*removeExpense*/ 2) expense_changes.removeExpense = /*removeExpense*/ ctx[1];
     			expense.$set(expense_changes);
     		},
     		i: function intro(local) {
@@ -916,7 +956,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(11:0) {#each expenses as expense}",
+    		source: "(12:0) {#each expenses as expense}",
     		ctx
     	});
 
@@ -969,7 +1009,7 @@ var app = (function () {
     				each_1_else.c();
     			}
 
-    			add_location(section, file$1, 6, 0, 151);
+    			add_location(section, file$1, 7, 0, 182);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -992,7 +1032,7 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*expenses*/ 1) {
+    			if (dirty & /*expenses, removeExpense*/ 3) {
     				each_value = /*expenses*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
@@ -1076,7 +1116,15 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('ExpenseList', slots, []);
     	let { expenses = [] } = $$props;
-    	const writable_props = ['expenses'];
+    	let { removeExpense } = $$props;
+
+    	$$self.$$.on_mount.push(function () {
+    		if (removeExpense === undefined && !('removeExpense' in $$props || $$self.$$.bound[$$self.$$.props['removeExpense']])) {
+    			console.warn("<ExpenseList> was created without expected prop 'removeExpense'");
+    		}
+    	});
+
+    	const writable_props = ['expenses', 'removeExpense'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<ExpenseList> was created with unknown prop '${key}'`);
@@ -1084,25 +1132,32 @@ var app = (function () {
 
     	$$self.$$set = $$props => {
     		if ('expenses' in $$props) $$invalidate(0, expenses = $$props.expenses);
+    		if ('removeExpense' in $$props) $$invalidate(1, removeExpense = $$props.removeExpense);
     	};
 
-    	$$self.$capture_state = () => ({ SectionTitle: Title, Expense, expenses });
+    	$$self.$capture_state = () => ({
+    		SectionTitle: Title,
+    		Expense,
+    		expenses,
+    		removeExpense
+    	});
 
     	$$self.$inject_state = $$props => {
     		if ('expenses' in $$props) $$invalidate(0, expenses = $$props.expenses);
+    		if ('removeExpense' in $$props) $$invalidate(1, removeExpense = $$props.removeExpense);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [expenses];
+    	return [expenses, removeExpense];
     }
 
     class ExpenseList extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { expenses: 0 });
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { expenses: 0, removeExpense: 1 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -1117,6 +1172,14 @@ var app = (function () {
     	}
 
     	set expenses(value) {
+    		throw new Error("<ExpenseList>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get removeExpense() {
+    		throw new Error("<ExpenseList>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set removeExpense(value) {
     		throw new Error("<ExpenseList>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -1156,7 +1219,10 @@ var app = (function () {
     	navbar = new Navbar({ $$inline: true });
 
     	expenselist = new ExpenseList({
-    			props: { expenses: /*expenses*/ ctx[0] },
+    			props: {
+    				expenses: /*expenses*/ ctx[0],
+    				removeExpense: /*removeExpense*/ ctx[1]
+    			},
     			$$inline: true
     		});
 
@@ -1167,7 +1233,7 @@ var app = (function () {
     			main = element("main");
     			create_component(expenselist.$$.fragment);
     			attr_dev(main, "class", "content");
-    			add_location(main, file, 14, 0, 227);
+    			add_location(main, file, 20, 0, 350);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1179,7 +1245,11 @@ var app = (function () {
     			mount_component(expenselist, main, null);
     			current = true;
     		},
-    		p: noop,
+    		p: function update(ctx, [dirty]) {
+    			const expenselist_changes = {};
+    			if (dirty & /*expenses*/ 1) expenselist_changes.expenses = /*expenses*/ ctx[0];
+    			expenselist.$set(expenselist_changes);
+    		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(navbar.$$.fragment, local);
@@ -1214,6 +1284,12 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
     	let expenses = [...expensesData];
+
+    	// functions 
+    	function removeExpense(id) {
+    		$$invalidate(0, expenses = expenses.filter(item => item.id !== id));
+    	}
+
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
@@ -1224,7 +1300,8 @@ var app = (function () {
     		Navbar,
     		ExpenseList,
     		expensesData,
-    		expenses
+    		expenses,
+    		removeExpense
     	});
 
     	$$self.$inject_state = $$props => {
@@ -1235,7 +1312,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [expenses];
+    	return [expenses, removeExpense];
     }
 
     class App extends SvelteComponentDev {
