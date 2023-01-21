@@ -1,11 +1,15 @@
 <script>
-    export let expense = [];
-    export let removeExpense;
-    let amountToggle = false;
-
-    function toggleAmount() { 
-        amountToggle = !amountToggle;
-    }
+// components
+import { getContext } from "svelte";
+// variables 
+export let expense = [];
+let amountToggle = false;
+// functions 
+function toggleAmount() { 
+    amountToggle = !amountToggle;
+}
+// context
+const removeExpense = getContext('remove');
 </script>
 
 <article class = "single-expense">

@@ -2,7 +2,6 @@
     import SectionTitle from './Title.svelte';
     import Expense from './Expense.svelte';
     export let expenses = [];    
-    export let removeExpense;
 </script>
 
 <section>
@@ -10,7 +9,7 @@
 </section>
 
 {#each expenses as expense}  
-    <Expense expense = {expense} removeExpense = {removeExpense}/>
+    <Expense expense = {expense}/>
     {:else}
     <h2>No expenses right now</h2>
 {/each}
