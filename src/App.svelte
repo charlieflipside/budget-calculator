@@ -1,9 +1,9 @@
 <script>
 import Navbar from './Navbar.svelte';
-import expensesData from '../expenses';
+import ExpenseList from './ExpenseList.svelte';
+import expensesData from '../expenses.js';
 
 let expenses = [...expensesData];
-console.log(expenses);
 
 </script>
 
@@ -12,3 +12,6 @@ console.log(expenses);
 <!-- HTML -->
 
 <Navbar />
+<main class = "content">
+<ExpenseList expenses = {expenses}/>
+</main>
