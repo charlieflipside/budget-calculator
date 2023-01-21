@@ -12,4 +12,6 @@
 <div class = "single-expense">    
     <Expense expense = {expense}/>
 </div>
+    {:else}
+    <h2>No expenses right now</h2>
 {/each}

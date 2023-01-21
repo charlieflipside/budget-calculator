@@ -728,6 +728,36 @@ var app = (function () {
     	return child_ctx;
     }
 
+    // (15:4) {:else}
+    function create_else_block(ctx) {
+    	let h2;
+
+    	const block = {
+    		c: function create() {
+    			h2 = element("h2");
+    			h2.textContent = "No expenses right now";
+    			add_location(h2, file$1, 15, 4, 346);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, h2, anchor);
+    		},
+    		p: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h2);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block.name,
+    		type: "else",
+    		source: "(15:4) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
     // (11:0) {#each expenses as expense}
     function create_each_block(ctx) {
     	let div;
@@ -809,6 +839,12 @@ var app = (function () {
     		each_blocks[i] = null;
     	});
 
+    	let each_1_else = null;
+
+    	if (!each_value.length) {
+    		each_1_else = create_else_block(ctx);
+    	}
+
     	const block = {
     		c: function create() {
     			section = element("section");
@@ -820,6 +856,11 @@ var app = (function () {
     			}
 
     			each_1_anchor = empty();
+
+    			if (each_1_else) {
+    				each_1_else.c();
+    			}
+
     			add_location(section, file$1, 6, 0, 151);
     		},
     		l: function claim(nodes) {
@@ -835,6 +876,11 @@ var app = (function () {
     			}
 
     			insert_dev(target, each_1_anchor, anchor);
+
+    			if (each_1_else) {
+    				each_1_else.m(target, anchor);
+    			}
+
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
@@ -864,6 +910,17 @@ var app = (function () {
     				}
 
     				check_outros();
+
+    				if (!each_value.length && each_1_else) {
+    					each_1_else.p(ctx, dirty);
+    				} else if (!each_value.length) {
+    					each_1_else = create_else_block(ctx);
+    					each_1_else.c();
+    					each_1_else.m(each_1_anchor.parentNode, each_1_anchor);
+    				} else if (each_1_else) {
+    					each_1_else.d(1);
+    					each_1_else = null;
+    				}
     			}
     		},
     		i: function intro(local) {
@@ -892,6 +949,7 @@ var app = (function () {
     			if (detaching) detach_dev(t);
     			destroy_each(each_blocks, detaching);
     			if (detaching) detach_dev(each_1_anchor);
+    			if (each_1_else) each_1_else.d(detaching);
     		}
     	};
 
