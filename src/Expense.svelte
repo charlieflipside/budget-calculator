@@ -1,17 +1,23 @@
 <script>
     export let expense = [];
-</script>
+    let amountToggle = true;
 
+    function toggleAmount() { 
+        amountToggle = !amountToggle;
+    }
+</script>
 
 <article class = "single-expense">
 <div class = "expense-info">
 <h2>
     {expense.name}
-    <button class = "amount-btn">
+    <button class = "amount-btn" on:click={toggleAmount}>
         <i class="fas fa-caret-down"></i>
     </button> 
 </h2>
-<h4>amount: ${expense.amount}</h4>
+{#if amountToggle}
+    <h4>amount: ${expense.amount}</h4>
+{/if}
 </div>
 <div class = "expense-buttons">
 <button class = "expense-btn edit-btn">

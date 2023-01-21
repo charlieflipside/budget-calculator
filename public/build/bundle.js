@@ -56,6 +56,10 @@ var app = (function () {
     function empty() {
         return text('');
     }
+    function listen(node, event, handler, options) {
+        node.addEventListener(event, handler, options);
+        return () => node.removeEventListener(event, handler, options);
+    }
     function attr(node, attribute, value) {
         if (value == null)
             node.removeAttribute(attribute);
@@ -361,6 +365,19 @@ var app = (function () {
         dispatch_dev('SvelteDOMRemove', { node });
         detach(node);
     }
+    function listen_dev(node, event, handler, options, has_prevent_default, has_stop_propagation) {
+        const modifiers = options === true ? ['capture'] : options ? Array.from(Object.keys(options)) : [];
+        if (has_prevent_default)
+            modifiers.push('preventDefault');
+        if (has_stop_propagation)
+            modifiers.push('stopPropagation');
+        dispatch_dev('SvelteDOMAddEventListener', { node, event, handler, modifiers });
+        const dispose = listen(node, event, handler, options);
+        return () => {
+            dispatch_dev('SvelteDOMRemoveEventListener', { node, event, handler, modifiers });
+            dispose();
+        };
+    }
     function attr_dev(node, attribute, value) {
         attr(node, attribute, value);
         if (value == null)
@@ -603,6 +620,44 @@ var app = (function () {
 
     const file$2 = "src\\Expense.svelte";
 
+    // (18:0) {#if amountToggle}
+    function create_if_block(ctx) {
+    	let h4;
+    	let t0;
+    	let t1_value = /*expense*/ ctx[0].amount + "";
+    	let t1;
+
+    	const block = {
+    		c: function create() {
+    			h4 = element("h4");
+    			t0 = text("amount: $");
+    			t1 = text(t1_value);
+    			add_location(h4, file$2, 18, 4, 404);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, h4, anchor);
+    			append_dev(h4, t0);
+    			append_dev(h4, t1);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*expense*/ 1 && t1_value !== (t1_value = /*expense*/ ctx[0].amount + "")) set_data_dev(t1, t1_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h4);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block.name,
+    		type: "if",
+    		source: "(18:0) {#if amountToggle}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
     function create_fragment$2(ctx) {
     	let article;
     	let div0;
@@ -613,17 +668,16 @@ var app = (function () {
     	let button0;
     	let i0;
     	let t2;
-    	let h4;
     	let t3;
-    	let t4_value = /*expense*/ ctx[0].amount + "";
-    	let t4;
-    	let t5;
     	let div1;
     	let button1;
     	let i1;
-    	let t6;
+    	let t4;
     	let button2;
     	let i2;
+    	let mounted;
+    	let dispose;
+    	let if_block = /*amountToggle*/ ctx[1] && create_if_block(ctx);
 
     	const block = {
     		c: function create() {
@@ -635,36 +689,33 @@ var app = (function () {
     			button0 = element("button");
     			i0 = element("i");
     			t2 = space();
-    			h4 = element("h4");
-    			t3 = text("amount: $");
-    			t4 = text(t4_value);
-    			t5 = space();
+    			if (if_block) if_block.c();
+    			t3 = space();
     			div1 = element("div");
     			button1 = element("button");
     			i1 = element("i");
-    			t6 = space();
+    			t4 = space();
     			button2 = element("button");
     			i2 = element("i");
     			attr_dev(i0, "class", "fas fa-caret-down");
-    			add_location(i0, file$2, 10, 8, 190);
+    			add_location(i0, file$2, 14, 8, 322);
     			attr_dev(button0, "class", "amount-btn");
-    			add_location(button0, file$2, 9, 4, 151);
-    			add_location(h2, file$2, 7, 0, 121);
-    			add_location(h4, file$2, 13, 0, 248);
+    			add_location(button0, file$2, 13, 4, 259);
+    			add_location(h2, file$2, 11, 0, 229);
     			attr_dev(div0, "class", "expense-info");
-    			add_location(div0, file$2, 6, 0, 91);
+    			add_location(div0, file$2, 10, 0, 199);
     			attr_dev(i1, "class", "fas fa-pen");
-    			add_location(i1, file$2, 17, 4, 370);
+    			add_location(i1, file$2, 23, 4, 533);
     			attr_dev(button1, "class", "expense-btn edit-btn");
-    			add_location(button1, file$2, 16, 0, 325);
+    			add_location(button1, file$2, 22, 0, 488);
     			attr_dev(i2, "class", "fas fa-trash");
-    			add_location(i2, file$2, 20, 4, 456);
+    			add_location(i2, file$2, 26, 4, 619);
     			attr_dev(button2, "class", "expense-btn delete-btn");
-    			add_location(button2, file$2, 19, 0, 409);
+    			add_location(button2, file$2, 25, 0, 572);
     			attr_dev(div1, "class", "expense-buttons");
-    			add_location(div1, file$2, 15, 0, 292);
+    			add_location(div1, file$2, 21, 0, 455);
     			attr_dev(article, "class", "single-expense");
-    			add_location(article, file$2, 5, 0, 55);
+    			add_location(article, file$2, 9, 0, 163);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -678,25 +729,43 @@ var app = (function () {
     			append_dev(h2, button0);
     			append_dev(button0, i0);
     			append_dev(div0, t2);
-    			append_dev(div0, h4);
-    			append_dev(h4, t3);
-    			append_dev(h4, t4);
-    			append_dev(article, t5);
+    			if (if_block) if_block.m(div0, null);
+    			append_dev(article, t3);
     			append_dev(article, div1);
     			append_dev(div1, button1);
     			append_dev(button1, i1);
-    			append_dev(div1, t6);
+    			append_dev(div1, t4);
     			append_dev(div1, button2);
     			append_dev(button2, i2);
+
+    			if (!mounted) {
+    				dispose = listen_dev(button0, "click", /*toggleAmount*/ ctx[2], false, false, false);
+    				mounted = true;
+    			}
     		},
     		p: function update(ctx, [dirty]) {
     			if (dirty & /*expense*/ 1 && t0_value !== (t0_value = /*expense*/ ctx[0].name + "")) set_data_dev(t0, t0_value);
-    			if (dirty & /*expense*/ 1 && t4_value !== (t4_value = /*expense*/ ctx[0].amount + "")) set_data_dev(t4, t4_value);
+
+    			if (/*amountToggle*/ ctx[1]) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block(ctx);
+    					if_block.c();
+    					if_block.m(div0, null);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(article);
+    			if (if_block) if_block.d();
+    			mounted = false;
+    			dispose();
     		}
     	};
 
@@ -715,6 +784,12 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Expense', slots, []);
     	let { expense = [] } = $$props;
+    	let amountToggle = true;
+
+    	function toggleAmount() {
+    		$$invalidate(1, amountToggle = !amountToggle);
+    	}
+
     	const writable_props = ['expense'];
 
     	Object.keys($$props).forEach(key => {
@@ -725,17 +800,18 @@ var app = (function () {
     		if ('expense' in $$props) $$invalidate(0, expense = $$props.expense);
     	};
 
-    	$$self.$capture_state = () => ({ expense });
+    	$$self.$capture_state = () => ({ expense, amountToggle, toggleAmount });
 
     	$$self.$inject_state = $$props => {
     		if ('expense' in $$props) $$invalidate(0, expense = $$props.expense);
+    		if ('amountToggle' in $$props) $$invalidate(1, amountToggle = $$props.amountToggle);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [expense];
+    	return [expense, amountToggle, toggleAmount];
     }
 
     class Expense extends SvelteComponentDev {
