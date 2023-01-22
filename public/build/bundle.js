@@ -903,7 +903,7 @@ var app = (function () {
     		c: function create() {
     			h2 = element("h2");
     			h2.textContent = "No expenses right now";
-    			add_location(h2, file$1, 13, 4, 304);
+    			add_location(h2, file$1, 13, 4, 292);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);
@@ -1019,7 +1019,7 @@ var app = (function () {
     				each_1_else.c();
     			}
 
-    			add_location(section, file$1, 6, 0, 151);
+    			add_location(section, file$1, 6, 0, 139);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1199,10 +1199,14 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let navbar;
-    	let t;
+    	let t0;
     	let main;
     	let expenselist;
+    	let t1;
+    	let button;
     	let current;
+    	let mounted;
+    	let dispose;
     	navbar = new Navbar({ $$inline: true });
 
     	expenselist = new ExpenseList({
@@ -1213,21 +1217,34 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			create_component(navbar.$$.fragment);
-    			t = space();
+    			t0 = space();
     			main = element("main");
     			create_component(expenselist.$$.fragment);
+    			t1 = space();
+    			button = element("button");
+    			button.textContent = "clear expenses";
+    			attr_dev(button, "type", "button");
+    			attr_dev(button, "class", "btn btn-primary btn-block");
+    			add_location(button, file, 26, 0, 537);
     			attr_dev(main, "class", "content");
-    			add_location(main, file, 21, 0, 431);
+    			add_location(main, file, 24, 0, 474);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			mount_component(navbar, target, anchor);
-    			insert_dev(target, t, anchor);
+    			insert_dev(target, t0, anchor);
     			insert_dev(target, main, anchor);
     			mount_component(expenselist, main, null);
+    			append_dev(main, t1);
+    			append_dev(main, button);
     			current = true;
+
+    			if (!mounted) {
+    				dispose = listen_dev(button, "click", /*clearExpenses*/ ctx[1], false, false, false);
+    				mounted = true;
+    			}
     		},
     		p: function update(ctx, [dirty]) {
     			const expenselist_changes = {};
@@ -1247,9 +1264,11 @@ var app = (function () {
     		},
     		d: function destroy(detaching) {
     			destroy_component(navbar, detaching);
-    			if (detaching) detach_dev(t);
+    			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(main);
     			destroy_component(expenselist);
+    			mounted = false;
+    			dispose();
     		}
     	};
 
@@ -1274,6 +1293,10 @@ var app = (function () {
     		$$invalidate(0, expenses = expenses.filter(item => item.id !== id));
     	}
 
+    	function clearExpenses() {
+    		$$invalidate(0, expenses = []);
+    	}
+
     	//context 
     	setContext('remove', removeExpense);
 
@@ -1289,7 +1312,8 @@ var app = (function () {
     		ExpenseList,
     		expensesData,
     		expenses,
-    		removeExpense
+    		removeExpense,
+    		clearExpenses
     	});
 
     	$$self.$inject_state = $$props => {
@@ -1300,7 +1324,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [expenses];
+    	return [expenses, clearExpenses];
     }
 
     class App extends SvelteComponentDev {

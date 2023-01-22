@@ -1,7 +1,7 @@
 <script>
-    import SectionTitle from './Title.svelte';
-    import Expense from './Expense.svelte';
-    export let expenses = [];    
+import SectionTitle from './Title.svelte';
+import Expense from './Expense.svelte';
+export let expenses = [];    
 </script>
 
 <section>
