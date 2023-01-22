@@ -5,10 +5,7 @@ import Navbar from './Navbar.svelte';
 import ExpenseList from './ExpenseList.svelte';
 import expensesData from '../expenses.js';
 // variables
-let initialExpenses = [...expensesData];
-let addedExpenses = [];
-$: expenses = [...initialExpenses, ...addedExpenses];
-
+let expenses = [...expensesData];
 // functions 
 function removeExpense(id){
 expenses = expenses.filter(item => item.id !== id);
@@ -16,13 +13,8 @@ expenses = expenses.filter(item => item.id !== id);
 function clearExpenses(){
 expenses = [];
 }
-function addExpense(){
-addedExpenses = [...addedExpenses, {id: 1, name: "hi", amount: 5}];
-}
-
 //context 
 setContext('remove', removeExpense);
-setContext('add', addExpense);
 </script>
 
 <!-- Style -->

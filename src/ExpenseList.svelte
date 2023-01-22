@@ -11,5 +11,5 @@ export let expenses = [];
 {#each expenses as expense}  
     <Expense expense = {expense}/>
     {:else}
-    <h2>No expenses in the list</h2>
+    <h2>No expenses right now</h2>
 {/each}
