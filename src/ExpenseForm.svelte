@@ -4,7 +4,9 @@
     let amount = null;
     $: isEmpty = !name || !amount;
     function handleSubmit(){
-        console.log('form submitted');
+        console.log({name, amount});
+        name = '';
+        amount = null;
     }
 </script>
 

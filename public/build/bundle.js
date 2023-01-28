@@ -1339,7 +1339,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$1 = "src\\ExpenseForm.svelte";
 
-    // (25:4) {:else}
+    // (27:4) {:else}
     function create_else_block(ctx) {
     	let t;
 
@@ -1359,14 +1359,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(25:4) {:else}",
+    		source: "(27:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (23:4) {#if !isEmpty}
+    // (25:4) {#if !isEmpty}
     function create_if_block(ctx) {
     	let t;
 
@@ -1386,7 +1386,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(23:4) {#if !isEmpty}",
+    		source: "(25:4) {#if !isEmpty}",
     		ctx
     	});
 
@@ -1461,35 +1461,35 @@ var app = (function () {
     			i = element("i");
     			t10 = text("\r\n            Close");
     			attr_dev(label0, "for", "name");
-    			add_location(label0, file$1, 14, 8, 406);
+    			add_location(label0, file$1, 16, 8, 448);
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "id", "name");
-    			add_location(input0, file$1, 15, 8, 446);
+    			add_location(input0, file$1, 17, 8, 488);
     			attr_dev(div0, "class", "form-control");
-    			add_location(div0, file$1, 13, 8, 368);
+    			add_location(div0, file$1, 15, 8, 410);
     			attr_dev(label1, "for", "Amount");
-    			add_location(label1, file$1, 18, 12, 562);
+    			add_location(label1, file$1, 20, 12, 604);
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "id", "amount");
-    			add_location(input1, file$1, 19, 12, 610);
+    			add_location(input1, file$1, 21, 12, 652);
     			attr_dev(div1, "class", "form-control");
-    			add_location(div1, file$1, 17, 8, 520);
+    			add_location(div1, file$1, 19, 8, 562);
     			attr_dev(p, "class", "form-empty");
-    			add_location(p, file$1, 21, 8, 690);
+    			add_location(p, file$1, 23, 8, 732);
     			attr_dev(button0, "type", "submit");
     			attr_dev(button0, "class", "btn btn-block");
     			button0.disabled = /*isEmpty*/ ctx[2];
     			toggle_class(button0, "disabled", /*isEmpty*/ ctx[2]);
-    			add_location(button0, file$1, 29, 8, 842);
+    			add_location(button0, file$1, 31, 8, 884);
     			attr_dev(i, "class", "fas fa-times");
-    			add_location(i, file$1, 35, 12, 1062);
+    			add_location(i, file$1, 37, 12, 1104);
     			attr_dev(button1, "type", "button");
     			attr_dev(button1, "class", "close-btn");
-    			add_location(button1, file$1, 34, 8, 1004);
+    			add_location(button1, file$1, 36, 8, 1046);
     			attr_dev(form, "class", "expense-form");
-    			add_location(form, file$1, 12, 4, 288);
+    			add_location(form, file$1, 14, 4, 330);
     			attr_dev(section, "class", "form");
-    			add_location(section, file$1, 10, 0, 221);
+    			add_location(section, file$1, 12, 0, 263);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1524,9 +1524,9 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[3]),
-    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[4]),
-    					listen_dev(form, "submit", prevent_default(handleSubmit), false, true, false)
+    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[4]),
+    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[5]),
+    					listen_dev(form, "submit", prevent_default(/*handleSubmit*/ ctx[3]), false, true, false)
     				];
 
     				mounted = true;
@@ -1588,16 +1588,19 @@ var app = (function () {
     	return block;
     }
 
-    function handleSubmit() {
-    	console.log('form submitted');
-    }
-
     function instance$1($$self, $$props, $$invalidate) {
     	let isEmpty;
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('ExpenseForm', slots, []);
     	let name = '';
     	let amount = null;
+
+    	function handleSubmit() {
+    		console.log({ name, amount });
+    		$$invalidate(0, name = '');
+    		$$invalidate(1, amount = null);
+    	}
+
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
@@ -1638,7 +1641,14 @@ var app = (function () {
     		}
     	};
 
-    	return [name, amount, isEmpty, input0_input_handler, input1_input_handler];
+    	return [
+    		name,
+    		amount,
+    		isEmpty,
+    		handleSubmit,
+    		input0_input_handler,
+    		input1_input_handler
+    	];
     }
 
     class ExpenseForm extends SvelteComponentDev {
