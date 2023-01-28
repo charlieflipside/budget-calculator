@@ -60,6 +60,13 @@ var app = (function () {
         node.addEventListener(event, handler, options);
         return () => node.removeEventListener(event, handler, options);
     }
+    function prevent_default(fn) {
+        return function (event) {
+            event.preventDefault();
+            // @ts-ignore
+            return fn.call(this, event);
+        };
+    }
     function attr(node, attribute, value) {
         if (value == null)
             node.removeAttribute(attribute);
@@ -1454,31 +1461,31 @@ var app = (function () {
     			i = element("i");
     			t10 = text("\r\n            Close");
     			attr_dev(label0, "for", "name");
-    			add_location(label0, file$1, 14, 8, 391);
+    			add_location(label0, file$1, 14, 8, 406);
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "id", "name");
-    			add_location(input0, file$1, 15, 8, 431);
+    			add_location(input0, file$1, 15, 8, 446);
     			attr_dev(div0, "class", "form-control");
-    			add_location(div0, file$1, 13, 8, 353);
+    			add_location(div0, file$1, 13, 8, 368);
     			attr_dev(label1, "for", "Amount");
-    			add_location(label1, file$1, 18, 12, 547);
+    			add_location(label1, file$1, 18, 12, 562);
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "id", "amount");
-    			add_location(input1, file$1, 19, 12, 595);
+    			add_location(input1, file$1, 19, 12, 610);
     			attr_dev(div1, "class", "form-control");
-    			add_location(div1, file$1, 17, 8, 505);
+    			add_location(div1, file$1, 17, 8, 520);
     			attr_dev(p, "class", "form-empty");
-    			add_location(p, file$1, 21, 8, 675);
+    			add_location(p, file$1, 21, 8, 690);
     			attr_dev(button0, "type", "submit");
     			attr_dev(button0, "class", "btn btn-block");
     			button0.disabled = /*isEmpty*/ ctx[2];
     			toggle_class(button0, "disabled", /*isEmpty*/ ctx[2]);
-    			add_location(button0, file$1, 29, 8, 827);
+    			add_location(button0, file$1, 29, 8, 842);
     			attr_dev(i, "class", "fas fa-times");
-    			add_location(i, file$1, 35, 12, 1047);
+    			add_location(i, file$1, 35, 12, 1062);
     			attr_dev(button1, "type", "button");
     			attr_dev(button1, "class", "close-btn");
-    			add_location(button1, file$1, 34, 8, 989);
+    			add_location(button1, file$1, 34, 8, 1004);
     			attr_dev(form, "class", "expense-form");
     			add_location(form, file$1, 12, 4, 288);
     			attr_dev(section, "class", "form");
@@ -1519,7 +1526,7 @@ var app = (function () {
     				dispose = [
     					listen_dev(input0, "input", /*input0_input_handler*/ ctx[3]),
     					listen_dev(input1, "input", /*input1_input_handler*/ ctx[4]),
-    					listen_dev(form, "submit", handleSubmit, false, false, false)
+    					listen_dev(form, "submit", prevent_default(handleSubmit), false, true, false)
     				];
 
     				mounted = true;
