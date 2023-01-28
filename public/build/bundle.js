@@ -75,6 +75,9 @@ var app = (function () {
     function set_input_value(input, value) {
         input.value = value == null ? '' : value;
     }
+    function toggle_class(element, name, toggle) {
+        element.classList[toggle ? 'add' : 'remove'](name);
+    }
     function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
         const e = document.createEvent('CustomEvent');
         e.initCustomEvent(type, bubbles, cancelable, detail);
@@ -1461,12 +1464,13 @@ var app = (function () {
     			attr_dev(button0, "type", "submit");
     			attr_dev(button0, "class", "btn btn-block");
     			button0.disabled = /*isEmpty*/ ctx[2];
+    			toggle_class(button0, "disabled", /*isEmpty*/ ctx[2]);
     			add_location(button0, file$1, 26, 8, 725);
     			attr_dev(i, "class", "fas fa-times");
-    			add_location(i, file$1, 30, 12, 903);
+    			add_location(i, file$1, 32, 12, 945);
     			attr_dev(button1, "type", "button");
     			attr_dev(button1, "class", "close-btn");
-    			add_location(button1, file$1, 29, 8, 845);
+    			add_location(button1, file$1, 31, 8, 887);
     			attr_dev(form, "class", "expense-form");
     			add_location(form, file$1, 9, 4, 211);
     			attr_dev(section, "class", "form");
@@ -1533,6 +1537,10 @@ var app = (function () {
 
     			if (!current || dirty & /*isEmpty*/ 4) {
     				prop_dev(button0, "disabled", /*isEmpty*/ ctx[2]);
+    			}
+
+    			if (!current || dirty & /*isEmpty*/ 4) {
+    				toggle_class(button0, "disabled", /*isEmpty*/ ctx[2]);
     			}
     		},
     		i: function intro(local) {

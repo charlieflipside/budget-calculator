@@ -24,7 +24,9 @@
     {/if}
 
         </p>
-        <button type = "submit" class="btn btn-block" disabled ={isEmpty}>
+        <button type = "submit" class="btn btn-block"
+        class:disabled={isEmpty}
+        disabled={isEmpty}>
             Add Expense
         </button>
         <button type = "button" class = "close-btn">
