@@ -3,11 +3,14 @@
     let name = '';
     let amount = null;
     $: isEmpty = !name || !amount;
+    function handleSubmit(){
+        console.log('form submitted');
+    }
 </script>
 
 <section class = "form">
     <Title title = "Add Expense" />
-    <form class = "expense-form"> 
+    <form class = "expense-form" on:submit={handleSubmit}> 
         <div class = "form-control">
         <label for="name">Name</label>
         <input type="text" id="name" bind:value={name}/>
