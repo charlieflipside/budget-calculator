@@ -2,7 +2,6 @@
     import Title from "./Title.svelte";
     let name = '';
     let amount = null;
-    $: isEmpty = !name || !amount;
 </script>
 
 <section class = "form">
@@ -17,7 +16,7 @@
             <input type="number" id="amount" bind:value={amount}/>
         </div>
         <p class = "form-empty">
-    {#if !isEmpty}
+    {#if name.length > 0 & amount !== null}
     Ready to Submit
     {:else}
     Please Fill Out All Form Fields
