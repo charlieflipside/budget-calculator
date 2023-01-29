@@ -1702,12 +1702,14 @@ var app = (function () {
     	let navbar;
     	let t0;
     	let main;
-    	let expenseform;
     	let t1;
-    	let expenselist;
     	let t2;
-    	let totals;
+    	let expenseform;
     	let t3;
+    	let expenselist;
+    	let t4;
+    	let totals;
+    	let t5;
     	let button;
     	let current;
     	let mounted;
@@ -1740,19 +1742,21 @@ var app = (function () {
     			create_component(navbar.$$.fragment);
     			t0 = space();
     			main = element("main");
-    			create_component(expenseform.$$.fragment);
-    			t1 = space();
-    			create_component(expenselist.$$.fragment);
+    			t1 = text(/*isEditing*/ ctx[4]);
     			t2 = space();
-    			create_component(totals.$$.fragment);
+    			create_component(expenseform.$$.fragment);
     			t3 = space();
+    			create_component(expenselist.$$.fragment);
+    			t4 = space();
+    			create_component(totals.$$.fragment);
+    			t5 = space();
     			button = element("button");
     			button.textContent = "clear expenses";
     			attr_dev(button, "type", "button");
     			attr_dev(button, "class", "btn btn-primary btn-block");
-    			add_location(button, file, 51, 0, 1316);
+    			add_location(button, file, 53, 0, 1375);
     			attr_dev(main, "class", "content");
-    			add_location(main, file, 47, 0, 1141);
+    			add_location(main, file, 48, 0, 1187);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1761,21 +1765,24 @@ var app = (function () {
     			mount_component(navbar, target, anchor);
     			insert_dev(target, t0, anchor);
     			insert_dev(target, main, anchor);
-    			mount_component(expenseform, main, null);
     			append_dev(main, t1);
-    			mount_component(expenselist, main, null);
     			append_dev(main, t2);
-    			mount_component(totals, main, null);
+    			mount_component(expenseform, main, null);
     			append_dev(main, t3);
+    			mount_component(expenselist, main, null);
+    			append_dev(main, t4);
+    			mount_component(totals, main, null);
+    			append_dev(main, t5);
     			append_dev(main, button);
     			current = true;
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*clearExpenses*/ ctx[4], false, false, false);
+    				dispose = listen_dev(button, "click", /*clearExpenses*/ ctx[5], false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
+    			if (!current || dirty & /*isEditing*/ 16) set_data_dev(t1, /*isEditing*/ ctx[4]);
     			const expenseform_changes = {};
     			if (dirty & /*setName*/ 2) expenseform_changes.name = /*setName*/ ctx[1];
     			if (dirty & /*setAmount*/ 4) expenseform_changes.amount = /*setAmount*/ ctx[2];
@@ -1826,6 +1833,7 @@ var app = (function () {
     }
 
     function instance($$self, $$props, $$invalidate) {
+    	let isEditing;
     	let total;
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
@@ -1853,7 +1861,7 @@ var app = (function () {
 
     	function modifyExpense(id) {
     		let editExpense = expenses.find(item => item.id === id);
-    		setId = editExpense.id;
+    		$$invalidate(6, setId = editExpense.id);
     		$$invalidate(1, setName = editExpense.name);
     		$$invalidate(2, setAmount = editExpense.amount);
     	}
@@ -1884,15 +1892,17 @@ var app = (function () {
     		clearExpenses,
     		addExpense,
     		modifyExpense,
-    		total
+    		total,
+    		isEditing
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('expenses' in $$props) $$invalidate(0, expenses = $$props.expenses);
     		if ('setName' in $$props) $$invalidate(1, setName = $$props.setName);
     		if ('setAmount' in $$props) $$invalidate(2, setAmount = $$props.setAmount);
-    		if ('setId' in $$props) setId = $$props.setId;
+    		if ('setId' in $$props) $$invalidate(6, setId = $$props.setId);
     		if ('total' in $$props) $$invalidate(3, total = $$props.total);
+    		if ('isEditing' in $$props) $$invalidate(4, isEditing = $$props.isEditing);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -1900,13 +1910,17 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*expenses*/ 1) {
+    		if ($$self.$$.dirty & /*setId*/ 64) {
     			// reactive 
+    			$$invalidate(4, isEditing = setId == null ? true : false);
+    		}
+
+    		if ($$self.$$.dirty & /*expenses*/ 1) {
     			$$invalidate(3, total = expenses.reduce((t, n) => t + n.amount, 0));
     		}
     	};
 
-    	return [expenses, setName, setAmount, total, clearExpenses];
+    	return [expenses, setName, setAmount, total, isEditing, clearExpenses, setId];
     }
 
     class App extends SvelteComponentDev {
