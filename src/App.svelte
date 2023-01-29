@@ -19,7 +19,9 @@ function clearExpenses(){
 expenses = [];
 }
 function addExpense({name, amount}){
-console.log(name, amount);
+let newExpense = {id: Math.random()*100, name, amount};
+expenses = [newExpense, ...expenses];
+
 }
 
 //context 
