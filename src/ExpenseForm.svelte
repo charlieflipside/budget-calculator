@@ -3,6 +3,7 @@ import { getContext } from "svelte";
     import Title from "./Title.svelte";
     export let name = '';
     export let amount = null;
+    export let isEditing;
     $: isEmpty = !name || !amount;
     function handleSubmit(){
     addExpense({name, amount});
@@ -26,9 +27,7 @@ const addExpense = getContext('add');
         <input type="number" id="amount" bind:value={amount}/>
         </div>
         <p class = "form-empty">
-    {#if !isEmpty}
-    Ready to Submit
-    {:else}
+    {#if isEmpty}
     Please Fill Out All Form Fields
     {/if}
 
@@ -36,7 +35,11 @@ const addExpense = getContext('add');
         <button type = "submit" class="btn btn-block"
         class:disabled={isEmpty}
         disabled={isEmpty}>
-        Add Expense
+    {#if !isEditing}
+    Add Expense
+    {:else}
+    Edit Expense
+    {/if}
         </button>
         <button type = "button" class = "close-btn">
         <i class="fas fa-times" />

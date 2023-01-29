@@ -14,7 +14,7 @@ let setName = '';
 let setAmount = '';
 let setId = null;
 // reactive 
-$: isEditing = setId == null ? true : false;
+$: isEditing = setId == null ? false : true;
 $: total = expenses.reduce((t,n) => t + n.amount, 0);
 // functions 
 function removeExpense(id){
@@ -47,8 +47,9 @@ setContext('edit', modifyExpense);
 
 <Navbar />
 <main class = "content">
-{isEditing}
-    <ExpenseForm  name = {setName} amount = {setAmount}/> 
+    <ExpenseForm name = {setName} 
+        amount = {setAmount}
+        isEditing = {isEditing}/> 
 <ExpenseList expenses = {expenses}/>
 <Totals title = "Total Amount" total = {total} />
 <button type = "button" class = "btn btn-primary btn-block" 
