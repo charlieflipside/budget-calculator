@@ -10,6 +10,8 @@ function toggleAmount() {
 }
 // context
 const removeExpense = getContext('remove');
+const modifyExpense = getContext('edit');
+
 </script>
 
 <article class = "single-expense">
@@ -25,10 +27,12 @@ const removeExpense = getContext('remove');
 {/if}
 </div>
 <div class = "expense-buttons">
-<button class = "expense-btn edit-btn">
+<button class = "expense-btn edit-btn" 
+    on:click={modifyExpense(expense.id)}>
     <i class="fas fa-pen"></i>
 </button>
-<button class = "expense-btn delete-btn" on:click={removeExpense(expense.id)}>
+<button class = "expense-btn delete-btn" 
+    on:click={removeExpense(expense.id)}>
     <i class="fas fa-trash"></i>
 </button>
 </div>

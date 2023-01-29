@@ -9,6 +9,10 @@ import ExpenseForm from './ExpenseForm.svelte';
 
 // variables
 let expenses = [...expensesData];
+// editing variables 
+let setName = '';
+let setAmount = '';
+let setId = null;
 // reactive 
 $: total = expenses.reduce((t,n) => t + n.amount, 0);
 // functions 
@@ -21,12 +25,20 @@ expenses = [];
 function addExpense({name, amount}){
 let newExpense = {id: Math.random()*100, name, amount};
 expenses = [newExpense, ...expenses];
-
+}
+function modifyExpense(id){
+    let editExpense = expenses.find(item => item.id === id);
+    setId = editExpense.id;
+    setName = editExpense.name;
+    setAmount = editExpense.amount;
+    console.log({setId, setName, setAmount})
 }
 
 //context 
 setContext('remove', removeExpense);
 setContext('add', addExpense);
+setContext('edit', modifyExpense);
+
 </script>
 
 <!-- Style -->
