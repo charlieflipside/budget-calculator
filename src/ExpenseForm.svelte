@@ -1,13 +1,17 @@
 <script>
+import { getContext } from "svelte";
     import Title from "./Title.svelte";
     let name = '';
     let amount = null;
     $: isEmpty = !name || !amount;
     function handleSubmit(){
-        console.log({name, amount});
+    addExpense({name, amount});
         name = '';
         amount = null;
     }
+
+// context
+const addExpense = getContext('add');
 </script>
 
 <section class = "form">
@@ -18,8 +22,8 @@
         <input type="text" id="name" bind:value={name}/>
         </div>
         <div class = "form-control">
-            <label for="Amount">Amount</label>
-            <input type="number" id="amount" bind:value={amount}/>
+        <label for="Amount">Amount</label>
+        <input type="number" id="amount" bind:value={amount}/>
         </div>
         <p class = "form-empty">
     {#if !isEmpty}
@@ -32,10 +36,10 @@
         <button type = "submit" class="btn btn-block"
         class:disabled={isEmpty}
         disabled={isEmpty}>
-            Add Expense
+        Add Expense
         </button>
         <button type = "button" class = "close-btn">
-            <i class="fas fa-times" />
-            Close</button>
+        <i class="fas fa-times" />
+        Close</button>
     </form>
 </section>

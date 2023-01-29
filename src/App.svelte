@@ -18,8 +18,13 @@ expenses = expenses.filter(item => item.id !== id);
 function clearExpenses(){
 expenses = [];
 }
+function addExpense({name, amount}){
+console.log(name, amount);
+}
+
 //context 
 setContext('remove', removeExpense);
+setContext('add', addExpense);
 </script>
 
 <!-- Style -->
