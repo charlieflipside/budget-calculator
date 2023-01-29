@@ -49,6 +49,7 @@ setContext('edit', modifyExpense);
 <main class = "content">
     <ExpenseForm name = {setName} 
         amount = {setAmount}
+        id = {setId}
         isEditing = {isEditing}/> 
 <ExpenseList expenses = {expenses}/>
 <Totals title = "Total Amount" total = {total} />
