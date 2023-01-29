@@ -3,26 +3,16 @@ import { getContext } from "svelte";
     import Title from "./Title.svelte";
     export let name = '';
     export let amount = null;
-    export let id = null;
     export let isEditing;
     $: isEmpty = !name || !amount;
     function handleSubmit(){
-
-    if (isEditing) {
-    removeExpense(id);
     addExpense({name, amount});
-    name = '';
-    amount = null; 
-    }   else {   
-        addExpense({name, amount});
         name = '';
         amount = null;
     }
-}
 
 // context
 const addExpense = getContext('add');
-const removeExpense = getContext('remove');
 </script>
 
 <section class = "form">
