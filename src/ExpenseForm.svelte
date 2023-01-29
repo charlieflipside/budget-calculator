@@ -1,8 +1,8 @@
 <script>
 import { getContext } from "svelte";
     import Title from "./Title.svelte";
-    let name = '';
-    let amount = null;
+    export let name = '';
+    export let amount = null;
     $: isEmpty = !name || !amount;
     function handleSubmit(){
     addExpense({name, amount});

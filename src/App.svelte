@@ -31,7 +31,6 @@ function modifyExpense(id){
     setId = editExpense.id;
     setName = editExpense.name;
     setAmount = editExpense.amount;
-    console.log({setId, setName, setAmount})
 }
 
 //context 
@@ -47,8 +46,8 @@ setContext('edit', modifyExpense);
 
 <Navbar />
 <main class = "content">
-    <ExpenseForm /> 
-<ExpenseList expenses = {expenses} />
+    <ExpenseForm  name = {setName} amount = {setAmount}/> 
+<ExpenseList expenses = {expenses}/>
 <Totals title = "Total Amount" total = {total} />
 <button type = "button" class = "btn btn-primary btn-block" 
     on:click={clearExpenses}>
