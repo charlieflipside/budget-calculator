@@ -34,11 +34,17 @@ function modifyExpense(id){
     setAmount = editExpense.amount;
 }
 
+function pushEdit({name, amount}){
+    expenses = expenses.map(item => {
+        return item.id === setId ? {...item, name:name,amount:amount} : {...item}; 
+    })  
+}
+
 //context 
 setContext('remove', removeExpense);
 setContext('add', addExpense);
 setContext('edit', modifyExpense);
-
+setContext('push', pushEdit);
 </script>
 
 <!-- Style -->

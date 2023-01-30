@@ -6,13 +6,18 @@ import { getContext } from "svelte";
     export let isEditing;
     $: isEmpty = !name || !amount;
     function handleSubmit(){
-    addExpense({name, amount});
+        if (isEditing) {
+        pushEdit({name, amount}); 
+        } else {   
+        addExpense({name, amount});
+        }
         name = '';
         amount = null;
     }
 
 // context
 const addExpense = getContext('add');
+const pushEdit = getContext('push');
 </script>
 
 <section class = "form">
